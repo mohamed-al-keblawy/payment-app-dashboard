@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PaymentApp.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using PaymentApp.Infrastructure.Data;
 namespace PaymentApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250619222929_AddTransactionTable")]
+    partial class AddTransactionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,16 +48,6 @@ namespace PaymentApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cards");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("00000000-0000-0000-0000-000000000001"),
-                            Balance = 1000m,
-                            CardHolder = "Mohamed Al Keblawy",
-                            CardNumber = "1234567890123456",
-                            ExpiryDate = new DateTime(2026, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("PaymentApp.Domain.Entities.PaymentTransaction", b =>

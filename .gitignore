@@ -53,3 +53,6 @@ CodeCoverage/
 TestResult.xml
 nunit-*.xml
 backend/.vs/PaymentApp/FileContentIndex
+backend/.vs/PaymentApp/CopilotIndices
+backend/.vs/PaymentApp/v17
+backend/.vs/PaymentApp/DesignTimeBuild

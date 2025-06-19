@@ -22,4 +22,15 @@ public class CardRepository : ICardRepository
         _context.Cards.Update(card);
         await _context.SaveChangesAsync();
     }
+
+    public async Task AddBalanceAsync(string cardNumber, decimal amount)
+    {
+        var card = await GetByNumberAsync(cardNumber);
+        if (card != null)
+        {
+            card.Balance += amount;
+            _context.Cards.Update(card);
+            await _context.SaveChangesAsync();
+        }
+    }
 }
