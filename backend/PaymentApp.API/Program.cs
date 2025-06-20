@@ -32,6 +32,8 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IAutoConfirmService, AutoConfirmService>();
 builder.Services.AddHostedService<AutoConfirmWorker>();
 
+builder.Services.AddScoped<IReportsService, ReportsService>();
+
 
 
 

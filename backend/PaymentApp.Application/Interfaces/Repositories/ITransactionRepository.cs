@@ -1,4 +1,6 @@
-﻿using PaymentApp.Domain.Entities;
+﻿using PaymentApp.Application.DTOs.Requests;
+using PaymentApp.Application.DTOs.Responses;
+using PaymentApp.Domain.Entities;
 
 namespace PaymentApp.Application.Interfaces.Repositories;
 
@@ -9,5 +11,8 @@ public interface ITransactionRepository
     Task UpdateAsync(PaymentTransaction tx);
 
     Task<List<PaymentTransaction>> GetExpiredHeldTransactionsAsync();
+
+    Task<PagedResult<PaymentReportItem>> GetPaymentsReportAsync(PaymentsReportFilter filter);
+
 
 }
