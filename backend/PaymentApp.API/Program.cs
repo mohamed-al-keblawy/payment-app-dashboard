@@ -4,6 +4,7 @@ using PaymentApp.Application.Interfaces.Services;
 using PaymentApp.Application.Services;
 using PaymentApp.Infrastructure.Data;
 using PaymentApp.Infrastructure.Repositories;
+using PaymentApp.Infrastructure.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,9 @@ builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
+
+builder.Services.AddScoped<IAutoConfirmService, AutoConfirmService>();
+builder.Services.AddHostedService<AutoConfirmWorker>();
 
 
 

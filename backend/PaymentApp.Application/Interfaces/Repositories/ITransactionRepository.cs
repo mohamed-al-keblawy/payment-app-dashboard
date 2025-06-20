@@ -7,4 +7,7 @@ public interface ITransactionRepository
     Task AddAsync(PaymentTransaction transaction);
     Task<PaymentTransaction?> GetByTransactionIdAsync(string transactionId);
     Task UpdateAsync(PaymentTransaction tx);
+
+    Task<List<PaymentTransaction>> GetExpiredHeldTransactionsAsync();
+
 }

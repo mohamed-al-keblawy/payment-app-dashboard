@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PaymentApp.Application.Interfaces.Repositories;
 using PaymentApp.Domain.Entities;
+using PaymentApp.Domain.Enums;
 using PaymentApp.Infrastructure.Data;
 
 namespace PaymentApp.Infrastructure.Repositories;
@@ -25,5 +26,13 @@ public class TransactionRepository : ITransactionRepository
         _context.Transactions.Update(tx);
         await _context.SaveChangesAsync();
     }
-    
+
+    public async Task<List<PaymentTransaction>> GetExpiredHeldTransactionsAsync()
+    {
+        return await _context.Transactions
+            .Where(t => t.Status == TransactionStatus.Held && t.RefundCodeExpiry < DateTime.UtcNow)
+            .ToListAsync();
+    }
+
+
 }
