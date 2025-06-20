@@ -1,4 +1,5 @@
 ﻿using PaymentApp.Application.DTOs;
+using PaymentApp.Application.DTOs.Requests;
 using PaymentApp.Application.Interfaces.Repositories;
 using PaymentApp.Application.Interfaces.Services;
 using PaymentApp.Domain.Entities;

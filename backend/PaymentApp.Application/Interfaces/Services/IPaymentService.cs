@@ -1,4 +1,5 @@
 ﻿using PaymentApp.Application.DTOs;
+using PaymentApp.Application.DTOs.Requests;
 
 namespace PaymentApp.Application.Interfaces.Services;
 

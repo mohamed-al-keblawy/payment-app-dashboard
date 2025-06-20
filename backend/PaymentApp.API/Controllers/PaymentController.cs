@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PaymentApp.Application.DTOs;
+using PaymentApp.Application.DTOs.Requests;
 using PaymentApp.Application.Interfaces.Services;
 
 namespace PaymentApp.API.Controllers;

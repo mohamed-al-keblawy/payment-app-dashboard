@@ -6,4 +6,6 @@ namespace PaymentApp.Application.Interfaces.Services;
 public interface IReportsService
 {
     Task<PagedResult<PaymentReportItem>> GetPaymentsReportAsync(PaymentsReportFilter filter);
+    Task<PagedResult<CardReportItem>> GetCardReportAsync(CardReportFilter filter);
+
 }
