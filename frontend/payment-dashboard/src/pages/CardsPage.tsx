@@ -26,7 +26,7 @@ function CardsPage() {
             pageSize
         };
 
-        api.get('/reports/cards', { params })
+        api.get('/Card/cards', { params })
             .then(response => {
                 setData(response.data.items);
                 setTotalCount(response.data.totalCount);

@@ -35,6 +35,16 @@ builder.Services.AddHostedService<AutoConfirmWorker>();
 builder.Services.AddScoped<IReportsService, ReportsService>();
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 
 
 // -----------------------------
@@ -54,6 +64,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseHttpsRedirection();
+app.UseCors("AllowReactApp");
 app.UseAuthorization();
 
 app.MapControllers();

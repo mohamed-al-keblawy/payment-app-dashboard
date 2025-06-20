@@ -80,9 +80,6 @@ function PaymentsPage() {
                 <button onClick={handleSearch}>Search</button>
             </div>
 
-            {/* Chart */}
-            <TransactionsStatusChart />
-
             {/* Data Table */}
             {loading ? <p>Loading...</p> : (
                 <>
@@ -118,6 +115,9 @@ function PaymentsPage() {
                     </div>
                 </>
             )}
+
+            {/* Chart */}
+            <TransactionsStatusChart />
         </div>
     );
 }
