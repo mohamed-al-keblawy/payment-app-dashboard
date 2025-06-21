@@ -1,0 +1,67 @@
+trigger:
+  branches:
+    include:
+      - develop
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  backendProject: 'PaymentApp.API/PaymentApp.API.csproj'
+  webAppName: 'payment-api-webapp'  # Azure Web App for backend
+  frontendDir: 'frontend'
+  frontendOutput: 'build'
+
+steps:
+
+# .NET SDK
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.0.x'
+
+# Restore + Build backend
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '$(backendProject)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '$(backendProject)'
+    arguments: '--configuration $(buildConfiguration)'
+
+# Publish backend
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Backend'
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/backend'
+    zipAfterPublish: true
+
+# Deploy backend
+- task: AzureWebApp@1
+  displayName: 'Deploy Backend to Azure Web App'
+  inputs:
+    azureSubscription: 'MyAzureConnectionName'
+    appType: 'webApp'
+    appName: '$(webAppName)'
+    package: '$(Build.ArtifactStagingDirectory)/backend/**/*.zip'
+
+# Install Node.js for frontend
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+
+# npm install + build frontend
+- script: |
+    cd $(frontendDir)
+    npm install
+    npm run build
+  displayName: 'Build React Frontend'
+
+# (Optional) Upload frontend to Azure Static Web App or Storage
+# You can add deployment to Azure Blob Storage or App Service here.
