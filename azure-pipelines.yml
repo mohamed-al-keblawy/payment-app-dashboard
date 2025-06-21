@@ -9,19 +9,19 @@ pool:
 variables:
   buildConfiguration: 'Release'
   backendProject: 'PaymentApp.API/PaymentApp.API.csproj'
-  webAppName: 'payment-api-webapp'  # Azure Web App for backend
-  frontendDir: 'frontend'
+  webAppName: 'payment-api-webapp'  # 👈 replace with your real Azure Web App name
+  frontendDir: 'frontend/payment-dashboard'
   frontendOutput: 'build'
 
 steps:
 
-# .NET SDK
+# ✅ Use .NET 8
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
     version: '8.0.x'
 
-# Restore + Build backend
+# ✅ Restore + build .NET backend
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
@@ -33,7 +33,7 @@ steps:
     projects: '$(backendProject)'
     arguments: '--configuration $(buildConfiguration)'
 
-# Publish backend
+# ✅ Publish .NET API
 - task: DotNetCoreCLI@2
   displayName: 'Publish Backend'
   inputs:
@@ -42,26 +42,23 @@ steps:
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/backend'
     zipAfterPublish: true
 
-# Deploy backend
+# ✅ Deploy backend to Azure Web App
 - task: AzureWebApp@1
   displayName: 'Deploy Backend to Azure Web App'
   inputs:
-    azureSubscription: 'MyAzureConnectionName'
+    azureSubscription: 'MyAzureConnectionName'   # 🔁 replace with your service connection name
     appType: 'webApp'
     appName: '$(webAppName)'
     package: '$(Build.ArtifactStagingDirectory)/backend/**/*.zip'
 
-# Install Node.js for frontend
+# ✅ Install Node.js for frontend
 - task: NodeTool@0
   inputs:
     versionSpec: '18.x'
 
-# npm install + build frontend
+# ✅ Build React frontend (correct folder)
 - script: |
     cd $(frontendDir)
     npm install
     npm run build
   displayName: 'Build React Frontend'
-
-# (Optional) Upload frontend to Azure Static Web App or Storage
-# You can add deployment to Azure Blob Storage or App Service here.
